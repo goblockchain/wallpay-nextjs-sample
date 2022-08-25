@@ -14,12 +14,11 @@ export const BuyButton = () => {
   };
 
   const nftData = {
-    unitPrice: 1,
+    unitPrice: 5,
     amount: 1,
     tokenId: 4,
     itemName: "A+great+NFT",
     itemImage: "https://via.placeholder.com/150x200?text=A+great+NFT",
-    userSpaceUrl: "https://via.placeholder.com",
   };
 
   const triggerPayment = async () => {
@@ -29,6 +28,8 @@ export const BuyButton = () => {
       triggerLogin();
     }
   };
+
+  console.log(walletAddress);
 
   return (
     <>
