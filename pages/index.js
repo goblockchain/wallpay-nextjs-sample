@@ -13,12 +13,35 @@ export const BuyButton = () => {
     onOpenModal();
   };
 
+  // FOR THIS ERC1155 CONTRACT EXAMPLE, WE NEED THE FOLLOWING PARAMETERS:
+  // FOR MINTING:
+  // [ tokenId, amount ]
+  // FOR TRANSFERING (FIAT PAYMENT):
+  // [ tokenId, amount, recipientAddress ]
+
+  // FOR A ERC721 CONTRACT EXAMPLE, WE WOULD JUST USE THE FOLLOWING PARAMETERS:
+  // FOR MINTING:
+  // [ amount ]
+  // FOR TRANSFERING (FIAT PAYMENT):
+  // [ amount, recipientAddress ]
+
+  // transferParams AND mintParams ARE FREE TO FOLLOW YOUR CONTRACT SPECIFICATION
+
+  let unitPrice = 5; // IN CRYPTO CURRENCY
+  let quantity = 2; 
+  let myTokenId = 4; 
+
   const nftData = {
-    unitPrice: 5,
-    amount: 1,
-    tokenId: 4,
+    unitPrice: unitPrice,
+    amount: quantity,
     itemName: "A+great+NFT",
     itemImage: "https://via.placeholder.com/150x200?text=A+great+NFT",
+    transferParams: {
+      tokenId: myTokenId,
+      amount: quantity,
+      walletAddress: walletAddress,
+    },
+    mintParams: { tokenId: myTokenId, amount: quantity },
   };
 
   const triggerPayment = async () => {
@@ -28,8 +51,6 @@ export const BuyButton = () => {
       triggerLogin();
     }
   };
-
-  console.log(walletAddress);
 
   return (
     <>
