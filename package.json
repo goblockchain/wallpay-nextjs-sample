@@ -12,10 +12,13 @@
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "wallpay-react-sdk":"../../wallpay-react-sdk"
+    "wallpay-react-sdk": "../../wallpay-react-sdk"
   },
   "devDependencies": {
+    "@types/node": "^18.7.13",
+    "@types/react": "^17.0.48",
     "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5"
+    "eslint-config-next": "12.2.5",
+    "typescript": "^4.8.2"
   }
 }

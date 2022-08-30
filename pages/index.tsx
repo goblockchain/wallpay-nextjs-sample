@@ -3,33 +3,27 @@ import styles from "../styles/Home.module.css";
 import wallpaySDK from "./wallpay";
 import { useRouter } from "next/router";
 
-export const BuyButton = () => {
-  const { onOpenPaymentModal } = wallpaySDK.usePayment();
-  const { walletIsConnected, onOpenModal, walletAddress } =
-    wallpaySDK.useWallets();
-  const router = useRouter();
-
-  const triggerLogin = () => {
-    onOpenModal();
-  };
+export default function Home() {
+  const { BuyButton, useWallets } = wallpaySDK;
+  const { walletAddress } = useWallets();
 
   // FOR THIS ERC1155 CONTRACT EXAMPLE, WE NEED THE FOLLOWING PARAMETERS:
   // FOR MINTING:
   // [ tokenId, amount ]
   // FOR TRANSFERING (FIAT PAYMENT):
-  // [ tokenId, amount, recipientAddress ]
+  // [ tokenId, amount, walletAddress ]
 
   // FOR A ERC721 CONTRACT EXAMPLE, WE WOULD JUST USE THE FOLLOWING PARAMETERS:
   // FOR MINTING:
   // [ amount ]
   // FOR TRANSFERING (FIAT PAYMENT):
-  // [ amount, recipientAddress ]
+  // [ amount, walletAddress ]
 
   // transferParams AND mintParams ARE FREE TO FOLLOW YOUR CONTRACT SPECIFICATION
 
-  let unitPrice = 5; // IN CRYPTO CURRENCY
-  let quantity = 2; 
-  let myTokenId = 4; 
+  let unitPrice = 0.001; // IN CRYPTO CURRENCY
+  let quantity = 1;
+  let myTokenId = 2;
 
   const nftData = {
     unitPrice: unitPrice,
@@ -41,41 +35,13 @@ export const BuyButton = () => {
       amount: quantity,
       walletAddress: walletAddress,
     },
-    mintParams: { tokenId: myTokenId, amount: quantity },
+    hasFixedPrice: true,
+    mintParams: {
+      tokenId: myTokenId,
+      amount: quantity,
+    },
   };
 
-  const triggerPayment = async () => {
-    if (walletIsConnected) {
-      onOpenPaymentModal(nftData);
-    } else {
-      triggerLogin();
-    }
-  };
-
-  return (
-    <>
-      <button
-        onClick={triggerPayment}
-        style={{
-          fontSize: 24,
-          backgroundColor: "#e3e3e3",
-          padding: 16,
-          borderRadius: 8,
-          border: "none",
-          fontWeight: "bold",
-        }}
-      >
-        WALLPAY PAYMENT
-      </button>
-      <wallpaySDK.HandleConfirmCredit
-        router={router}
-        imageURL={nftData.itemImage}
-      />
-    </>
-  );
-};
-
-export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -85,7 +51,16 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <BuyButton />
+        <BuyButton
+          data={nftData}
+          style={{
+            padding: 0,
+            height: "200px",
+            backgroundColor: "transparent",
+          }}
+        >
+            Buy Now
+        </BuyButton>
       </main>
 
       <footer className={styles.footer}>
